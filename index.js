@@ -1,3 +1,4 @@
+// Đọc theo thứ tự đánh số để dễ hiểu hơn
 // *** 0 ***
 // Để tạo mới 1 ứng dụng nodejs, tạo thư mục chứa project, sau đó vào trong thư mục, mở terminal (cmd), gõ npm init, nhấn enter hoặc chỉnh sửa thuộc tính theo ý muốn.
 // Sau đó, tạo file index.js, tiếp theo, cài các thư viện cần thiết bằng cách gõ vào terminal các lệnh sau:
@@ -63,7 +64,7 @@ app.get('*', function(req, res){
 //  app.use(cookieParser())
 
 // *** 1 ***
-// Server này chạy ở port 3000, để truy cập, gõ localhost:3000
+// Server này chạy ở port 3000, để truy cập, gõ vào trình duyệt localhost:3000
 app.listen(3000);
 
 // Xem thêm tai https://www.tutorialspoint.com/expressjs/index.htm
