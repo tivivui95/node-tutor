@@ -72,6 +72,6 @@ app.get('*', function(req, res){
 
 // *** 1 ***
 // Server này chạy ở port 3000, để truy cập, gõ localhost:3000
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 
 // Xem thêm tai https://www.tutorialspoint.com/expressjs/index.htm
