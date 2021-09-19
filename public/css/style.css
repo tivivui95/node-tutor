@@ -156,7 +156,7 @@ body {
 
 .bot-nav {
     display: none;
-    background-color: whitesmoke;
+    background-color: rgba(245, 245, 245, 0.726);
     overflow: hidden;
     position: fixed;
     bottom: 0;
