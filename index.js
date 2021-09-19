@@ -1,4 +1,3 @@
-// Đọc theo thứ tự đánh số để dễ hiểu hơn
 // *** 0 ***
 // Để tạo mới 1 ứng dụng nodejs, tạo thư mục chứa project, sau đó vào trong thư mục, mở terminal (cmd), gõ npm init, nhấn enter hoặc chỉnh sửa thuộc tính theo ý muốn.
 // Sau đó, tạo file index.js, tiếp theo, cài các thư viện cần thiết bằng cách gõ vào terminal các lệnh sau:
@@ -20,28 +19,36 @@ var app = express();
 // *** 6 ***
 // Đây là dòng lệnh để chọn view engine cho web là pug engine
 // pug engine là 1 template để render html cho ExpressJS
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 // Chọn đường dẫn cho thư mục chứa template, ở đây thư mục được chọn là views, tạo thư mục views để chứa các file pug template, chi tiết cách viết pug tham khảo tại pugjs.org
 app.set('views','./views');
-
+app.use( express.static( "public" ) );
 // *** 2 ***
 // Đây là trang hiển thị mặc định khi vào web
 app.get('/', function(req, res) {
     // Đây là lệnh xuất ra màn hình web của người dùng, tương tự như cout hay document.write
-    res.send("Hello world!");
+    res.redirect('/home');
 });
 
 // *** 3 ***
 // Đây là trang hiển thị khi vào web theo đường dẫn /home
 app.all('/home', function(req, res) {
-    res.send("This is Home");
+    res.render('home');
+});
+
+app.all('/contact', function(req, res) {
+    res.render('contact');
+});
+
+app.all('/about', function(req, res) {
+    res.render('about');
 });
 
 // *** 7 ***
 // Đây là trang pug, có giao diện render bằng pug
 app.get('/pug', function(req, res) {
     // đây là lệnh render file pug, ở đây file được render là file home trong thư mục views
-    res.render('home');
+    res.render('demo');
 });
 
 // *** 4 ***
@@ -64,7 +71,7 @@ app.get('*', function(req, res){
 //  app.use(cookieParser())
 
 // *** 1 ***
-// Server này chạy ở port 3000, để truy cập, gõ vào trình duyệt localhost:3000
+// Server này chạy ở port 3000, để truy cập, gõ localhost:3000
 app.listen(3000);
 
 // Xem thêm tai https://www.tutorialspoint.com/expressjs/index.htm
