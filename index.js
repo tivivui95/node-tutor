@@ -7,7 +7,13 @@
 // *** 1 ***
 // Sử dụng thư viện expressJS
 var express = require('express');
+var bodyParser = require('body-parser'); // Thư viện dùng cho form 
+var multer = require('multer'); // Thư viện dùng cho form 
+var upload = multer(); // Thư viện dùng cho form 
 var app = express();
+
+var cookieParser = require('cookie-parser'); // Thư viện dùng cho cookie
+app.use(cookieParser());
 // *** 1 ***
 // Note:
 // Có 2 phương thức chính sử dụng cho web server là GET và POST.
@@ -27,9 +33,19 @@ app.use( express.static( "public" ) );
 // Đây là trang hiển thị mặc định khi vào web
 app.get('/', function(req, res) {
     // Đây là lệnh xuất ra màn hình web của người dùng, tương tự như cout hay document.write
-    res.redirect('/home');
+    res.cookie('name', 'express').render('home'); //Sets name = express
+    // res.redirect('/home');
+    // res.render('home');
+    
 });
+// Xóa cookie 
+app.get('/clear_cookie_name', function(req, res){
+    // Xóa cookie có ID là name
+    res.clearCookie('name');
+    res.send('cookie name cleared');
+ });
 
+// regex
 // *** 3 ***
 // Đây là trang hiển thị khi vào web theo đường dẫn /home
 app.all('/home', function(req, res) {
@@ -50,6 +66,23 @@ app.get('/pug', function(req, res) {
     // đây là lệnh render file pug, ở đây file được render là file home trong thư mục views
     res.render('demo');
 });
+// Xu li form
+app.get('/form', function(req, res) {
+    res.render('form');
+});
+// for parsing application/json
+app.use(bodyParser.json()); 
+
+app.use(bodyParser.urlencoded({ extended: true })); 
+
+app.use(upload.array());
+// Xu li form, khi nguoi dung nhap dung username va password hoac nhap sai
+app.post('/form', function(req, res){
+    console.log(req.body);
+    if (req.body.user == 'tivivui' && req.body.pass == '123456')
+    res.send("Correct! You're in");
+    else res.send("Fck U! Login again");
+ });
 
 // *** 4 ***
 // Đây là trang mặc định nếu người dùng nhập URL sai
@@ -60,7 +93,7 @@ app.get('*', function(req, res){
 
 // *** 5 ***
 // Đây là 2 thư viện để lấy data từ body và cookie
-//  var bodyParser = require('body-parser');
+
 
 //  //To parse URL encoded data
 //  app.use(bodyParser.urlencoded({ extended: false }))
