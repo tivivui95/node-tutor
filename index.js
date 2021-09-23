@@ -80,8 +80,8 @@ app.use(upload.array());
 app.post('/form', function(req, res){
     console.log(req.body);
     if (req.body.user == 'tivivui' && req.body.pass == '123456')
-    res.send("Correct! You're in");
-    else res.send("Fck U! Login again");
+    res.render('home');
+    else res.render('form');
  });
 
 // *** 4 ***
