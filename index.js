@@ -9,11 +9,14 @@
 var express = require('express');
 var bodyParser = require('body-parser'); // Thư viện dùng cho form 
 var multer = require('multer'); // Thư viện dùng cho form 
+var session = require('express-session');
 var upload = multer(); // Thư viện dùng cho form 
 var app = express();
 
+
 var cookieParser = require('cookie-parser'); // Thư viện dùng cho cookie
 app.use(cookieParser());
+app.use(session({secret: "Shh, its a secret!",resave: true, saveUninitialized: true}));
 // *** 1 ***
 // Note:
 // Có 2 phương thức chính sử dụng cho web server là GET và POST.
@@ -86,10 +89,26 @@ app.post('/form', function(req, res){
 
 // *** 4 ***
 // Đây là trang mặc định nếu người dùng nhập URL sai
-app.get('*', function(req, res){
-    res.send('Sorry, this is an invalid URL.');
+
+
+ app.get('/s', function(req, res){
+    if(req.session.page_views){
+       req.session.page_views++;
+       res.send("You visited this page " + req.session.page_views + " times");
+    } else {
+       req.session.page_views = 1;
+       res.send("Welcome to this page for the first time!");
+    }
  });
 
+ var movies = require('./movies.js');
+
+ //Use the Router on the sub route /movies
+ app.use('/movies', movies);
+
+ app.get('*', function(req, res){
+    res.send('Sorry, this is an invalid URL.');
+ });
 
 // *** 5 ***
 // Đây là 2 thư viện để lấy data từ body và cookie
